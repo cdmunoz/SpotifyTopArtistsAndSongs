@@ -17,8 +17,11 @@ public class SpotifyTrack {
   private String name;
   @SerializedName("duration_ms")
   private int duration;
+  @SerializedName("album")
+  private SpotifyAlbum album;
 
   public SpotifyTrack() {
+    this.album = new SpotifyAlbum();
   }
 
   public String getId() {
@@ -43,5 +46,13 @@ public class SpotifyTrack {
 
   public void setDuration(int duration) {
     this.duration = duration;
+  }
+
+  public SpotifyAlbum getAlbum() {
+    return album;
+  }
+
+  public void setAlbum(SpotifyAlbum album) {
+    this.album = album;
   }
 }

@@ -3,6 +3,7 @@ package co.cmunoz.myspotifycontents.topTenArtists;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -32,7 +33,9 @@ public class TopTenArtistsActivity extends AppCompatActivity implements TopTenAr
 
     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
     linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-    topTenArtistsList.setLayoutManager(linearLayoutManager);
+    GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+    topTenArtistsList.setHasFixedSize(true);
+    topTenArtistsList.setLayoutManager(gridLayoutManager);
 
     presenter = new TopTenArtistsPresenterImpl(this);
     presenter.getTopTenArtists();

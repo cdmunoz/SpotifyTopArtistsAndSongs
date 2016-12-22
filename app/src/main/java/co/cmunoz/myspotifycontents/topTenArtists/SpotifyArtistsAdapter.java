@@ -9,9 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import co.cmunoz.myspotifycontents.R;
-import co.cmunoz.myspotifycontents.topTenSongs.TopTenSongsActivity;
 import co.cmunoz.myspotifycontents.model.SpotifyArtistsItems;
+import co.cmunoz.myspotifycontents.topTenSongs.TopTenSongsActivity;
 import com.squareup.picasso.Picasso;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,11 +27,11 @@ public class SpotifyArtistsAdapter
     extends RecyclerView.Adapter<SpotifyArtistsAdapter.SpotifyArtistViewHolder> {
 
   private Activity activity;
-  private List<SpotifyArtistsItems> artists;
+  private final List<SpotifyArtistsItems> artists = new ArrayList<>();
 
   public SpotifyArtistsAdapter(Activity activity, List<SpotifyArtistsItems> artists) {
     this.activity = activity;
-    this.artists = artists;
+    this.artists.addAll(artists);
   }
 
   @Override public SpotifyArtistViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -41,16 +42,7 @@ public class SpotifyArtistsAdapter
 
   @Override public void onBindViewHolder(SpotifyArtistViewHolder holder, int position) {
     final SpotifyArtistsItems spotifyArtist = artists.get(position);
-    holder.cardTitle.setText(spotifyArtist.getName());
-    Picasso.with(holder.cardImage.getContext())
-        .load(spotifyArtist.getImages().get(0).getUrl())
-        .into(holder.cardImage);
-    holder.itemView.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View view) {
-        Intent intent = TopTenSongsActivity.getIntent(activity, spotifyArtist.getId());
-        activity.startActivity(intent);
-      }
-    });
+    holder.spotifyArtist(spotifyArtist, activity);
   }
 
   @Override public int getItemCount() {
@@ -59,13 +51,26 @@ public class SpotifyArtistsAdapter
 
   public static class SpotifyArtistViewHolder extends RecyclerView.ViewHolder {
 
-    TextView cardTitle;
-    ImageView cardImage;
+    private TextView cardTitle;
+    private ImageView cardImage;
 
     public SpotifyArtistViewHolder(View itemView) {
       super(itemView);
-      cardTitle = (TextView) itemView.findViewById(R.id.card_view_title);
+      cardTitle = (TextView) itemView.findViewById(R.id.card_view_song_title);
       cardImage = (ImageView) itemView.findViewById(R.id.card_view_img);
+    }
+
+    public void spotifyArtist(final SpotifyArtistsItems spotifyArtist, final Activity activity) {
+      cardTitle.setText(spotifyArtist.getName());
+      Picasso.with(cardImage.getContext())
+          .load(spotifyArtist.getImages().get(0).getUrl())
+          .into(cardImage);
+      itemView.setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View view) {
+          Intent intent = TopTenSongsActivity.getIntent(activity, spotifyArtist.getId());
+          activity.startActivity(intent);
+        }
+      });
     }
   }
 }

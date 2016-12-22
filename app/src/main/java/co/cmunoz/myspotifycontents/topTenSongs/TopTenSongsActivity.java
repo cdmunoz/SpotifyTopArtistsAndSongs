@@ -74,7 +74,7 @@ public class TopTenSongsActivity extends AppCompatActivity implements TopTenSong
   }
 
   @Override public void showSongs(List<SpotifyTrack> tracks) {
-    SpotifySongsAdapter adapter = new SpotifySongsAdapter(this, tracks);
+    SpotifySongsAdapter adapter = new SpotifySongsAdapter(tracks);
     topSongsList.setAdapter(adapter);
     adapter.notifyDataSetChanged();
     if(swipeRefresh) refreshLayout.setRefreshing(false);
