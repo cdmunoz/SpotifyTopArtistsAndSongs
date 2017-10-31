@@ -1,7 +1,7 @@
 <resources>
-  <string name="app_name">MySpotifyContents</string>
+  <string name="app_name">Spotify Artists</string>
   <string name="top_ten_artists_title">Spotify\'s Top Ten Artists</string>
-  <string name="top_ten_songs_title">Top Ten Songs</string>
+  <string name="top_ten_songs_title">%1$s\'s Top Ten Songs</string>
 
   <!-- Spotify's API redirect URL -->
   <string name="com_spotify_sdk_redirect_scheme">spotifycontents</string>
