@@ -1,6 +1,8 @@
 # MySpotifyContents
-Basic Android App using MVP. It connects to Spotify API then shows top ten artists and their top ten songs.
+This project shows how to connect to Spotify's API to show the top ten artist given a country, 
+then the top ten songs of an artist. 
 
-Initially has a mocked parameter to filter the top ten artists, currently is using GB (Great Britain) for this. 
+The app will be the foundation to show how to apply dependency injection using dagger2 for android 
+as a live code activity for Medellin Android's MeetUp. 
 
-A future feature will add this as parameter and will allow the user to select from a list the country to filter the artists.
+The icons used in the app have been taken fro free from http://www.iconfinder.com
