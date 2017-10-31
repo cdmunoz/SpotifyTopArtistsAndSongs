@@ -1,4 +1,4 @@
-# MySpotifyContents
+# Spotify Top Ten Artists and Songs
 This project shows how to connect to Spotify's API to show the top ten artist given a country, 
 then the top ten songs of an artist. 
 
