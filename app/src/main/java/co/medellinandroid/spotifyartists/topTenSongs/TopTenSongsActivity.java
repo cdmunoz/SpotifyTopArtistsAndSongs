@@ -19,11 +19,15 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.medellinandroid.spotifyartists.R;
+import co.medellinandroid.spotifyartists.di.component.DaggerSongsComponent;
+import co.medellinandroid.spotifyartists.di.component.SongsComponent;
+import co.medellinandroid.spotifyartists.di.module.SongsModule;
 import co.medellinandroid.spotifyartists.model.SpotifyTrack;
 import co.medellinandroid.spotifyartists.utils.BlurEffect;
 import co.medellinandroid.spotifyartists.utils.Constants;
 import com.squareup.picasso.Picasso;
 import java.util.List;
+import javax.inject.Inject;
 
 public class TopTenSongsActivity extends AppCompatActivity implements TopTenSongsView {
 
@@ -32,9 +36,10 @@ public class TopTenSongsActivity extends AppCompatActivity implements TopTenSong
   @BindView(R.id.app_bar) Toolbar topTenSongsBar;
   @BindView(R.id.app_bar_image) ImageView appBarImage;
 
-  private TopTenSongsPresenter presenter;
+  @Inject TopTenSongsPresenter presenter;
   private String artistName;
   private String artistId;
+  SongsComponent songsComponent;
 
   public static Intent getIntent(Context context, String artistId, String artistName) {
     Intent intent = new Intent(context, TopTenSongsActivity.class);
@@ -51,11 +56,12 @@ public class TopTenSongsActivity extends AppCompatActivity implements TopTenSong
     artistName = getIntent().getStringExtra(Constants.EXTRA_PARAM_ARTIST_NAME);
     artistId = getIntent().getStringExtra(Constants.EXTRA_PARAM_ARTIST_ID);
 
-    initToolbar();
+    songsComponent = DaggerSongsComponent.builder().songsModule(new SongsModule(this)).build();
+    songsComponent.inject(this);
 
+    initToolbar();
     initRecyclerView();
 
-    presenter = new TopTenSongsPresenterImpl(this);
     presenter.getTopTenSongs(artistId);
   }
 

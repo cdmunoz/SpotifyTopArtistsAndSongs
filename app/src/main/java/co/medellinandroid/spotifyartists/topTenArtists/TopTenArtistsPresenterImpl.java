@@ -4,6 +4,7 @@ import co.medellinandroid.spotifyartists.model.SpotifyArtistsResponse;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
+import javax.inject.Inject;
 
 public class TopTenArtistsPresenterImpl implements TopTenArtistsPresenter {
 
@@ -11,6 +12,7 @@ public class TopTenArtistsPresenterImpl implements TopTenArtistsPresenter {
   private TopTenArtistsInteractor topTenArtistsInteractor;
   private DisposableObserver<SpotifyArtistsResponse> disposableObserver;
 
+  @Inject
   public TopTenArtistsPresenterImpl(TopTenArtistsView view) {
     this.view = view;
     this.topTenArtistsInteractor = new TopTenArtistsInteractorImpl();
