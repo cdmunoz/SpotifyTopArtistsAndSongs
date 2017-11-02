@@ -1,6 +1,5 @@
 package co.medellinandroid.spotifyartists.di.module;
 
-import co.medellinandroid.spotifyartists.rest.ApiClient;
 import co.medellinandroid.spotifyartists.rest.ApiInterceptor;
 import co.medellinandroid.spotifyartists.rest.ApiInterface;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
@@ -43,11 +42,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
         .build();
   }
 
-  @Provides ApiClient providesApiClient(Retrofit retrofit) {
-    return new ApiClient();
-  }
-
-  @Provides ApiInterface providesApiInterface(Retrofit retrofit){
+  @Provides ApiInterface providesApiInterface(Retrofit retrofit) {
     return retrofit.create(ApiInterface.class);
   }
 }
