@@ -12,15 +12,14 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.medellinandroid.spotifyartists.R;
-import co.medellinandroid.spotifyartists.di.component.ArtistsComponent;
-import co.medellinandroid.spotifyartists.di.component.DaggerArtistsComponent;
-import co.medellinandroid.spotifyartists.di.module.ArtistsModule;
-import co.medellinandroid.spotifyartists.di.module.SongsModule;
+import co.medellinandroid.spotifyartists.di.component.ActivitiesComponent;
+import co.medellinandroid.spotifyartists.di.component.DaggerActivitiesComponent;
+import co.medellinandroid.spotifyartists.di.module.PresentersModule;
 import co.medellinandroid.spotifyartists.model.SpotifyArtistsItems;
 import java.util.List;
 import javax.inject.Inject;
 
-public class TopTenArtistsActivity extends AppCompatActivity implements TopTenArtistsView {
+public class TopTenArtistsActivity extends AppCompatActivity implements TopTenArtistsContract.View {
 
   @BindView(R.id.top_ten_artists_list_container) RecyclerView topTenArtistsList;
   @BindView(R.id.top_ten_artists_list_swipe) SwipeRefreshLayout refreshLayout;
@@ -31,16 +30,16 @@ public class TopTenArtistsActivity extends AppCompatActivity implements TopTenAr
   private List<SpotifyArtistsItems> spotifyArtists;
   private boolean swipeRefresh;
 
-  ArtistsComponent artistsComponent;
+  ActivitiesComponent activitiesComponent;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_top_ten_artists);
     ButterKnife.bind(this);
 
-    artistsComponent =
-        DaggerArtistsComponent.builder().artistsModule(new ArtistsModule(this)).build();
-    artistsComponent.inject(this);
+    activitiesComponent =
+        DaggerActivitiesComponent.builder().presentersModule(new PresentersModule()).build();
+    activitiesComponent.inject(this);
 
     if (null != getSupportActionBar()) {
       getSupportActionBar().setTitle(R.string.top_ten_artists_title);
@@ -48,6 +47,7 @@ public class TopTenArtistsActivity extends AppCompatActivity implements TopTenAr
 
     initRecyclerView();
 
+    presenter.attachView(this);
     presenter.getTopTenArtists();
 
     refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

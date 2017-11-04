@@ -19,9 +19,9 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.medellinandroid.spotifyartists.R;
-import co.medellinandroid.spotifyartists.di.component.DaggerSongsComponent;
-import co.medellinandroid.spotifyartists.di.component.SongsComponent;
-import co.medellinandroid.spotifyartists.di.module.SongsModule;
+import co.medellinandroid.spotifyartists.di.component.ActivitiesComponent;
+import co.medellinandroid.spotifyartists.di.component.DaggerActivitiesComponent;
+import co.medellinandroid.spotifyartists.di.module.PresentersModule;
 import co.medellinandroid.spotifyartists.model.SpotifyTrack;
 import co.medellinandroid.spotifyartists.utils.BlurEffect;
 import co.medellinandroid.spotifyartists.utils.Constants;
@@ -29,7 +29,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 import javax.inject.Inject;
 
-public class TopTenSongsActivity extends AppCompatActivity implements TopTenSongsView {
+public class TopTenSongsActivity extends AppCompatActivity implements TopTenSongsContract.View {
 
   @BindView(R.id.top_ten_songs_progressBar) ProgressBar progressBar;
   @BindView(R.id.top_ten_songs_list_container) RecyclerView topSongsList;
@@ -39,7 +39,7 @@ public class TopTenSongsActivity extends AppCompatActivity implements TopTenSong
   @Inject TopTenSongsPresenter presenter;
   private String artistName;
   private String artistId;
-  SongsComponent songsComponent;
+  ActivitiesComponent activitiesComponent;
 
   public static Intent getIntent(Context context, String artistId, String artistName) {
     Intent intent = new Intent(context, TopTenSongsActivity.class);
@@ -56,12 +56,14 @@ public class TopTenSongsActivity extends AppCompatActivity implements TopTenSong
     artistName = getIntent().getStringExtra(Constants.EXTRA_PARAM_ARTIST_NAME);
     artistId = getIntent().getStringExtra(Constants.EXTRA_PARAM_ARTIST_ID);
 
-    songsComponent = DaggerSongsComponent.builder().songsModule(new SongsModule(this)).build();
-    songsComponent.inject(this);
+    activitiesComponent =
+        DaggerActivitiesComponent.builder().presentersModule(new PresentersModule()).build();
+    activitiesComponent.inject(this);
 
     initToolbar();
     initRecyclerView();
 
+    presenter.attachView(this);
     presenter.getTopTenSongs(artistId);
   }
 
