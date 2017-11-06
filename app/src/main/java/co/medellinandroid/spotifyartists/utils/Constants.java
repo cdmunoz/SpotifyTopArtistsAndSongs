@@ -11,5 +11,5 @@ public interface Constants {
   //to get the token, go to https://developer.spotify.com/web-api/console/get-search-item/ a generate it
   //using your own Spotify account info
   String ACCESS_TOKEN =
-      "Bearer BQCrCG1XoZRfdaeW3GiipOGH1XRZBBiiqPh4Rd0WGivzhT0aVcj3g3yhw6eypGSpzJqRoH0eQRvkqtD08yLYdGm6v1h8gaogRj_HlHFRQIlYAeSKJsvCtFjt-egD8F0rzhS5zn16UeAVMOU";
+      "Bearer BQB73wLQKSIi0GY0Fz60Nib0WK1SjHWOjWb6X8apVKowFznHej6xa8ObG6LxpL9OBpnui3_0QTgpqjcYXorjywIbY7m7Ev0WIueSMUlxQa5rbtDHLPYzPfFVR7Fs1jJQpSfFKGbNrc8up8s";
 }
